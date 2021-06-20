@@ -342,9 +342,12 @@ class Module {
             'thousands' => ',',
             'lengthMenu' => '_MENU_',
             'loadingRecords' => 'Cargando información...',
-            'processing' => '<div class="uk-width-medium-1-2">
-                            <img src="' . asset('assets/img/spinners/spinner_large@2x.gif').'" alt="" width="64" height="64" data-dense-cap="2" class="dense-image dense-ready">
-                        </div>',
+            'processing' => '
+                <div class="row"> 
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary btn-load">Light <span class="btn-loader icofont-spinner"></span></button>
+                    </div>
+                </div>',
             'search' => " ",
             'zeroRecords' => "<span class='txt-color-darken'> No existen conincidencia con los registros  </span>",
             'paginate' => array(
@@ -384,9 +387,9 @@ class Module {
             //->setEvents()
               //->setDom("<'row table-tb' <'col-sm-12' l <'pull-left table-toolbar'> <'pull-right'f>r<'clearfix'>>> <'table-responsive't> <'row'<'col-sm-12'<'pull-left'i><'pull-right'p><'clearfix'>>>")
             ->setDom("<'pull-left table-toolbar'>".
-                "<'dt-uikit-header'<'uk-grid'<'uk-width-medium-2-3'l><'uk-width-medium-1-3'f>>>" .
-                "<'uk-overflow-container'tr>" .
-                "<'dt-uikit-footer'<'uk-grid'<'uk-width-medium-3-10'i><'uk-width-medium-7-10'p>>>")
+                "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" .
+                "<'table-responsive'tr>" .
+                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>")
 
 
             /*->setJsInitParam("oTableTools" , ' {
@@ -441,7 +444,7 @@ class Module {
      */
     public function getHtml($tAttributes = []){
         $id    = $this->config['table']['dom'];
-        $class = isset($this->config['class']['class']) ? $this->config['table']['class'] : "uk-table";
+        $class = isset($this->config['class']['class']) ? $this->config['table']['class'] : "table table-hover";
 
         if($this->DataTable){
             $table = $this->DataTable->getHtml(['id'=> $id, 'class'=>$class]);

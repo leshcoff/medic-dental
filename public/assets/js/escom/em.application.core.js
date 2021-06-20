@@ -334,19 +334,16 @@ var App = function () {
 
 
             var $this = this;
-            var iconsize    = "md-btn-small";
+            var iconsize    = "btn-sm";
 
 
             $.each(menu, function (idx, row) {
-                var btngroup    = $('<div class="md-btn-group">">');
+                var btngroup    = $('<div class="btn-group">');
                 var type        = this.class;
                 var parent      = this.parent;
                 var items       = this.items;
                 var showLabel   = this.showLabel;
-                var btncls      = this.btncls || 'md-btn-default';
-
-
-
+                var btncls      = this.btncls || 'btn-default';
 
                 if(type=='btn-group'){
 
@@ -366,7 +363,7 @@ var App = function () {
 
                         }
 
-                        var btn    = $('<button id="'+config.id+'">').addClass('md-btn md-btn-small md-btn-wave waves-effect waves-button btn-responsive  '+cls).addClass(size).append(icono);
+                        var btn    = $('<button id="'+config.id+'"ss/>').addClass('btn btn-outline-primary btn-responsive '+cls).addClass(size).append(icono);
                         var tip    = config.tooltip||undefined;
 
                         if(showLabel){
@@ -595,32 +592,26 @@ var App = function () {
             }
 
 
-            var thisNotify = UIkit.notify({
-                message: message,
-                status: 'danger',
-                timeout:  5000,
-                group:  null,
-                pos:  'top-right',
-                onClose: function() {
-                    $body.find('.md-fab-wrapper').css('margin-bottom','');
+            $.toast({
+                text    : message, // Text that is to be shown in the toast
+                heading : code, // Optional heading to be shown on the toast
 
-                }
+                showHideTransition: 'fade', // fade, slide or plain
+                allowToastClose: true, // Boolean value true or false
+                hideAfter: 10000, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden
+                stack: 5, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
+                position: 'bottom-left', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
+
+                bgColor: '#000',  // Background color of the toast
+                textColor: '#fff',  // Text color of the toast
+                textAlign: 'left',  // Text alignment i.e. left, right or center
+                loader: false,  // Whether to show loader or not. True by default
+                loaderBg: '#9EC600',  // Background color of the toast loader
+                beforeShow: function () {}, // will be triggered before the toast is shown
+                afterShown: function () {}, // will be triggered after the toat has been shown
+                beforeHide: function () {}, // will be triggered before the toast gets hidden
+                afterHidden: function () {}  // will be triggered after the toast has been hidden
             });
-            if(
-                (
-                    ($window.width() < 768)
-                    && (
-                        (thisNotify.options.pos == 'bottom-right')
-                        || (thisNotify.options.pos == 'bottom-left')
-                        || (thisNotify.options.pos == 'bottom-center')
-                    )
-                )
-                || (thisNotify.options.pos == 'bottom-right')
-            ) {
-                var thisNotify_height = $(thisNotify.element).outerHeight();
-                var spacer = $window.width() < 768 ? -6 : 8;
-                $body.find('.md-fab-wrapper').css('margin-bottom',thisNotify_height + spacer);
-            }
 
 
         },
@@ -815,28 +806,6 @@ var App = function () {
 
 
 
-
-
-
-
-
-//plugins
-jQuery.download = function(url, data, method, target){
-    //http://www.filamentgroup.com/lab/jquery_plugin_for_requesting_ajax_like_file_downloads/
-    //url and data options required
-    if( url && data ){
-        //data can be string of parameters or array/object
-        data = typeof data == 'string' ? data : jQuery.param(data);
-        //split params into form inputs
-        var inputs = '';
-        jQuery.each(data.split('&'), function(){
-            var pair = this.split('=');
-            inputs+='<input type="hidden" name="'+ pair[0] +'" value="'+ pair[1] +'" />';
-        });
-        //send request
-        jQuery('<form target="'+(target||'_blank')+'" action="'+ url +'" method="'+ (method||'post') +'">'+inputs+'</form>').appendTo('body').submit().remove();
-    };
-};
 
 /*
  * LOAD SCRIPTS
@@ -1500,3 +1469,8 @@ function loadScript(scriptName, callback) {
         }
     });
 })(jQuery);
+
+
+//jqToast https://kamranahmed.info/toast#quick-demos
+"function"!=typeof Object.create&&(Object.create=function(t){function o(){}return o.prototype=t,new o}),function(t,o,i,s){"use strict";var n={_positionClasses:["bottom-left","bottom-right","top-right","top-left","bottom-center","top-center","mid-center"],_defaultIcons:["success","error","info","warning"],init:function(o,i){this.prepareOptions(o,t.toast.options),this.process()},prepareOptions:function(o,i){var s={};"string"==typeof o||o instanceof Array?s.text=o:s=o,this.options=t.extend({},i,s)},process:function(){this.setup(),this.addToDom(),this.position(),this.bindToast(),this.animate()},setup:function(){var o="";if(this._toastEl=this._toastEl||t("<div></div>",{class:"jq-toast-single"}),o+='<span class="jq-toast-loader"></span>',this.options.allowToastClose&&(o+='<span class="close-jq-toast-single">&times;</span>'),this.options.text instanceof Array){this.options.heading&&(o+='<h2 class="jq-toast-heading">'+this.options.heading+"</h2>"),o+='<ul class="jq-toast-ul">';for(var i=0;i<this.options.text.length;i++)o+='<li class="jq-toast-li" id="jq-toast-item-'+i+'">'+this.options.text[i]+"</li>";o+="</ul>"}else this.options.heading&&(o+='<h2 class="jq-toast-heading">'+this.options.heading+"</h2>"),o+=this.options.text;this._toastEl.html(o),!1!==this.options.bgColor&&this._toastEl.css("background-color",this.options.bgColor),!1!==this.options.textColor&&this._toastEl.css("color",this.options.textColor),this.options.textAlign&&this._toastEl.css("text-align",this.options.textAlign),!1!==this.options.icon&&(this._toastEl.addClass("jq-has-icon"),-1!==t.inArray(this.options.icon,this._defaultIcons)&&this._toastEl.addClass("jq-icon-"+this.options.icon)),!1!==this.options.class&&this._toastEl.addClass(this.options.class)},position:function(){"string"==typeof this.options.position&&-1!==t.inArray(this.options.position,this._positionClasses)?"bottom-center"===this.options.position?this._container.css({left:t(o).outerWidth()/2-this._container.outerWidth()/2,bottom:20}):"top-center"===this.options.position?this._container.css({left:t(o).outerWidth()/2-this._container.outerWidth()/2,top:20}):"mid-center"===this.options.position?this._container.css({left:t(o).outerWidth()/2-this._container.outerWidth()/2,top:t(o).outerHeight()/2-this._container.outerHeight()/2}):this._container.addClass(this.options.position):"object"==typeof this.options.position?this._container.css({top:this.options.position.top?this.options.position.top:"auto",bottom:this.options.position.bottom?this.options.position.bottom:"auto",left:this.options.position.left?this.options.position.left:"auto",right:this.options.position.right?this.options.position.right:"auto"}):this._container.addClass("bottom-left")},bindToast:function(){var t=this;this._toastEl.on("afterShown",function(){t.processLoader()}),this._toastEl.find(".close-jq-toast-single").on("click",function(o){o.preventDefault(),"fade"===t.options.showHideTransition?(t._toastEl.trigger("beforeHide"),t._toastEl.fadeOut(function(){t._toastEl.trigger("afterHidden")})):"slide"===t.options.showHideTransition?(t._toastEl.trigger("beforeHide"),t._toastEl.slideUp(function(){t._toastEl.trigger("afterHidden")})):(t._toastEl.trigger("beforeHide"),t._toastEl.hide(function(){t._toastEl.trigger("afterHidden")}))}),"function"==typeof this.options.beforeShow&&this._toastEl.on("beforeShow",function(){t.options.beforeShow(t._toastEl)}),"function"==typeof this.options.afterShown&&this._toastEl.on("afterShown",function(){t.options.afterShown(t._toastEl)}),"function"==typeof this.options.beforeHide&&this._toastEl.on("beforeHide",function(){t.options.beforeHide(t._toastEl)}),"function"==typeof this.options.afterHidden&&this._toastEl.on("afterHidden",function(){t.options.afterHidden(t._toastEl)}),"function"==typeof this.options.onClick&&this._toastEl.on("click",function(){t.options.onClick(t._toastEl)})},addToDom:function(){var o=t(".jq-toast-wrap");if(0===o.length?(o=t("<div></div>",{class:"jq-toast-wrap",role:"alert","aria-live":"polite"}),t("body").append(o)):this.options.stack&&!isNaN(parseInt(this.options.stack,10))||o.empty(),o.find(".jq-toast-single:hidden").remove(),o.append(this._toastEl),this.options.stack&&!isNaN(parseInt(this.options.stack),10)){var i=o.find(".jq-toast-single").length-this.options.stack;i>0&&t(".jq-toast-wrap").find(".jq-toast-single").slice(0,i).remove()}this._container=o},canAutoHide:function(){return!1!==this.options.hideAfter&&!isNaN(parseInt(this.options.hideAfter,10))},processLoader:function(){if(!this.canAutoHide()||!1===this.options.loader)return!1;var t=this._toastEl.find(".jq-toast-loader"),o=(this.options.hideAfter-400)/1e3+"s",i=this.options.loaderBg,s=t.attr("style")||"";s=s.substring(0,s.indexOf("-webkit-transition")),s+="-webkit-transition: width "+o+" ease-in;                       -o-transition: width "+o+" ease-in;                       transition: width "+o+" ease-in;                       background-color: "+i+";",t.attr("style",s).addClass("jq-toast-loaded")},animate:function(){t=this;if(this._toastEl.hide(),this._toastEl.trigger("beforeShow"),"fade"===this.options.showHideTransition.toLowerCase()?this._toastEl.fadeIn(function(){t._toastEl.trigger("afterShown")}):"slide"===this.options.showHideTransition.toLowerCase()?this._toastEl.slideDown(function(){t._toastEl.trigger("afterShown")}):this._toastEl.show(function(){t._toastEl.trigger("afterShown")}),this.canAutoHide()){var t=this;o.setTimeout(function(){"fade"===t.options.showHideTransition.toLowerCase()?(t._toastEl.trigger("beforeHide"),t._toastEl.fadeOut(function(){t._toastEl.trigger("afterHidden")})):"slide"===t.options.showHideTransition.toLowerCase()?(t._toastEl.trigger("beforeHide"),t._toastEl.slideUp(function(){t._toastEl.trigger("afterHidden")})):(t._toastEl.trigger("beforeHide"),t._toastEl.hide(function(){t._toastEl.trigger("afterHidden")}))},this.options.hideAfter)}},reset:function(o){"all"===o?t(".jq-toast-wrap").remove():this._toastEl.remove()},update:function(t){this.prepareOptions(t,this.options),this.setup(),this.bindToast()},close:function(){this._toastEl.find(".close-jq-toast-single").click()}};t.toast=function(t){var o=Object.create(n);return o.init(t,this),{reset:function(t){o.reset(t)},update:function(t){o.update(t)},close:function(){o.close()}}},t.toast.options={text:"",heading:"",showHideTransition:"fade",allowToastClose:!0,hideAfter:3e3,loader:!0,loaderBg:"#9EC600",stack:5,position:"bottom-left",bgColor:!1,textColor:!1,textAlign:"left",icon:!1,beforeShow:function(){},afterShown:function(){},beforeHide:function(){},afterHidden:function(){},onClick:function(){}}}(jQuery,window,document);
+
