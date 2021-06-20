@@ -244,45 +244,13 @@ class PacienteController extends CBase
                     'type'  => 'text'
                 )
             ),
-            /*
-                       array(
-                           'parent'     => '',
-                           'data'       => 'OPC',
-                           'title'      => 'OPCIONES',
-                           'tooltip'    => 'Opciones',
-                           'visible'    => true,
-                           'searchable' => true,
-                           'width'      => '10%',
-                           'sFilter'    => array(
-                               'type'  => 'text'
-                           ),
-                           'formatter'   => function($data, $row, $col){
-                               $rowid = $row['ENTR_ENTRADA'];
-                               $copy  = $row['ENTR_COPY_ALMACEN'];
-
-                               $btn = '<div class="uk-text-center">';
-                               $btn   .= "<a href='#' class='detalle-entrada pointer' data-uk-tooltip=\"{pos:'top'}\" title='Detalle de entrada' data-row='{$rowid}' data-opc='detalle-permisos'><i class='material-icons'>picture_as_pdf</i></a>";
-
-                               if( $copy == '0' )
-                                   $btn   .= "<a href='#' class='send-to-inventory pointer' data-uk-tooltip=\"{pos:'top'}\" title='Enviar a inventarios' data-row='{$rowid}' data-opc='send-to-inventory' ><i class='material-icons'>assignment_turned_in</i></a>";
-
-                               $btn .= "</div>";
-                               return $btn;
-                           }
-                       ),*/
 
         );
 
 
         $ajax = [
             "ajax" => "function (data, callback, settings) {
-               data.FILT_INI            = $(\"#FILT_INI\").val();
-               data.FILT_FIN            = $(\"#FILT_FIN\").val();
-               data.FILT_ESTADO         = $('input[name = \"FILT_ESTADO\"]:checked').val();
-               data.FILT_REFERENCIA     = $(\"#FILT_REFERENCIA\").val();
-               data.FILT_UNIDAD_ORIGEN  = $(\"#FILT_UNIDAD_ORIGEN\").val();
-               data.FILT_INSUMO         = $(\"#FILT_INSUMO\").val();
-
+               
                $.ajax({
                  url   : '".url($this->route . '/data-table-list')."',
                  type  : 'POST',
@@ -299,25 +267,7 @@ class PacienteController extends CBase
         $callbacks = [
             "drawCallback" => 'function( settings ) {
 
-                    $(".action-settings").each(function(){
-                        $(this).on("click",function(e){
-                            hDevice.settings( $(this).data("venta") );
-                        });
-                    });
-
-                    $(".send-to-inventory").click(function(){
-                       var params = {};
-                       params.doAction = $(this).data("opc");
-                       params.rowid    = $(this).data("row");
-                       HEntrada.postFormSendToInventory( params );
-                    });
-
-                    $(".detalle-entrada").click(function(){
-                       var params = {};
-                       params.doAction = $(this).data("opc");
-                       params.rowid    = $(this).data("row");
-                       HEntrada.reportePDF( params );
-                    });
+                    
             }',
         ];
 
@@ -439,6 +389,10 @@ class PacienteController extends CBase
             ;
 
     }
+
+
+
+
 
 
 
