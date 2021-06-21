@@ -32,25 +32,20 @@
                     </li>
 
                     <li class="menu-item">
-                        <a class="item-link" href="doctors.html">
+                        <a class="item-link" href="{{ route('medics.index') }}">
                             <span class="link-icon icofont-doctor"></span>
                             <span class="link-text">Medicos</span>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a class="item-link" href="appointments.html">
+                        <a class="item-link" href="{{ route('appointments.index') }}">
                             <span class="link-icon icofont-stethoscope-alt"></span>
-                            <span class="link-text">Appointments</span>
+                            <span class="link-text">Citas</span>
                         </a>
                     </li>
 
-                    <li class="menu-item">
-                        <a class="item-link" href="departments.html">
-                            <span class="link-icon icofont-nurse"></span>
-                            <span class="link-text">Departments</span>
-                        </a>
-                    </li>
+                   
 
 
 

@@ -33,8 +33,28 @@ Route::group(['middleware'=>'auth'], function () {
         Route::post('data-table-list'           , array('uses' => 'PACIENTE\PacienteManagerController@postDataTableList'))->name('patients.data');
         Route::post('do-post'                   , array('uses' => 'PACIENTE\PacienteManagerController@postDoPost'))->name('patients.dopost');
         Route::post('form'                      , array('uses' => 'PACIENTE\PacienteManagerController@postForm'));
-        Route::any('form-ver-pdf'               , array('uses' => 'PACIENTE\PacienteManagerController@postFormPreview'));
-        Route::any('{id}/form-detalle'          , array('uses' => 'PACIENTE\PacienteDetallesManagerController@index'));
+        Route::post('search'                    , array('uses' => 'PACIENTE\PacienteController@search'));
+
+    });
+
+
+    Route::group(['prefix' => 'medics/']    , function () {
+        Route::get('/'                          , array('uses' => 'MEDIC\MedicController@index'))->name('medics.index');
+        Route::any('listado'                    , array('uses' => 'MEDIC\MedicController@listado'))->name('medics.listado');
+        Route::post('form'                      , array('uses' => 'MEDIC\MedicController@postForm'));
+        Route::get('{id}'                       , array('uses' => 'MEDIC\MedicController@profile'))->name('medics.profile');
+        Route::post('{id}/edit'                 , array('uses' => 'MEDIC\MedicController@edit'))->name('medics.edit');
+        Route::post('{id}/delete'               , array('uses' => 'MEDIC\MedicController@delete'))->name('medics.delete');
+        Route::post('do-post'                   , array('uses' => 'MEDIC\MedicController@postDoPost'))->name('medics.dopost');
+        Route::post('search'                    , array('uses' => 'MEDIC\MedicController@search'));
+    });
+
+
+    Route::group(['prefix' => 'appointments/']      , function () {
+        Route::get('/'                          , array('uses' => 'APPOINTMENTS\AppointmentManagerController@index'))->name('appointments.index');
+        Route::post('data-table-list'           , array('uses' => 'APPOINTMENTS\AppointmentManagerController@postDataTableList'))->name('appointments.data');
+        Route::post('do-post'                   , array('uses' => 'APPOINTMENTS\AppointmentManagerController@postDoPost'))->name('appointments.dopost');
+        Route::post('form'                      , array('uses' => 'APPOINTMENTS\AppointmentManagerController@postForm'));
     });
 
 });

@@ -6,9 +6,8 @@ namespace App\Http\Controllers\PACIENTE;
 use App\Http\Controllers\Controller;
 
 
-use App\Models\ENTRADAS\EMEntradas;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
@@ -634,5 +633,83 @@ class PacienteController extends CBase
 
         return false;
 
+    }
+
+
+
+    /**
+     * @return string
+     */
+    public function search(){
+
+        try
+        {
+
+            $search    = Request::get('q');
+            $page      = Request::get('page') ? Request::get('page') : 1;
+            $limit     = Request::get('page_limit') ? Request::get('page_limit') : 20;
+            $source    = Request::get('source') ? Request::get('source') : 'P';
+            $offset    = ($page-1) * $limit;
+
+            $MResponse = new EMResponse();
+
+
+            $query = EMPaciente::select(
+                DB::raw("
+                    SQL_CALC_FOUND_ROWS patients.*,
+                    CONCAT_WS(' ', name, lastname) full_name
+                    "
+                )
+            )
+                ->where(function ($q) use ($search) {
+                    $q->orWhere( DB::raw("CONCAT(name,' ', lastname) "), 'LIKE', '%' . $search . '%');
+                })
+                ->skip($offset)
+                ->take($limit);
+
+            $query->get();
+
+            $total = DB::selectOne( DB::raw("SELECT FOUND_ROWS() AS cnt;") );
+
+            $pickup = EMPaciente::from(DB::raw('(' . str_replace("SQL_CALC_FOUND_ROWS","",$query->toSql()) . ')  as tb '))
+                ->select(DB::raw('SQL_CALC_FOUND_ROWS tb.*'))
+                ->OrderBy('name','ASC');
+            $pickup->mergeBindings( $query->getQuery() );
+
+            $patients = $pickup->get();
+
+            /*********************
+             * TERMINO DE EDICION
+             *********************/
+
+            $items = array();
+            foreach($patients as $patient){
+
+                $items[] = [
+                    'id'        => $patient->id,
+                    'idisplay'  => $patient->id,
+                    'text'      => $patient->full_name,
+                    'image'     => "<img src=\"".asset($patient->photo) . "\" width='50' style=\"border-radius:50%;\">",
+
+
+                    'descrip'   => "
+                        <small class='text info'> <b>". $patient->id ."</b> - " . ($patient->email ? " : {$patient->email}</i>" : "") . "</small><br>
+                        <div>
+                        </div>
+
+                    "
+                ];
+
+            }
+
+            $data['total_count'] =  $total->cnt;
+            $data['items'] =  $items;
+            $MResponse->success($data);
+
+        }catch (Exception $e){
+            $MResponse->fail(array('code'=>$e->getCode(), 'message'=>$e->getMessage(), 'line'=>$e->getLine() ));
+        }
+
+        return $MResponse->built()->json();
     }
 }

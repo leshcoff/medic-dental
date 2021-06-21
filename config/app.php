@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Collective\Html\HtmlServiceProvider::class,
+        Escom\Form\FieldServiceProvider::class,
 
     ],
 
@@ -232,6 +233,7 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Field'     => Escom\Form\Facades\FieldFacade::class,
     ],
 
 ];

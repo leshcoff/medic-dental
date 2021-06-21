@@ -36,6 +36,9 @@ class EMPaciente extends Model
     protected $hidden = [];
 
 
+    public function getFullName(){
+        return $this->getAttribute('name') . ' '.$this->getAttribute('lastname');
+    }
 
 
 

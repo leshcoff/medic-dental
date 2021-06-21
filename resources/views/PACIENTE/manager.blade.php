@@ -21,7 +21,7 @@
 
     <script>
         $('.add-patient').click(function (e) {
-            jPatients._pClik('new',{action:'01'});
+            jPatients._pClik('01',{action:'01'});
         })
     </script>
 

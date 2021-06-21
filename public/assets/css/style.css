@@ -256,3 +256,111 @@ table.table tbody tr.selected td {
     font: 300 18px/27px 'Open Sans', Helvetica, Arial, sans-serif;
     text-align: center;
 }
+
+
+
+
+@media (min-width: 768px) and (max-width: 880px) {
+    header.page-header h2 {
+        font-size: 14px;
+    }
+
+    header.page-header .right-wrapper {
+        display: none;
+    }
+
+    .btn-responsive {
+        font-size: 98%;
+        padding: 4px 9px;
+    }
+
+    #main {
+        margin-left: 0;
+        overflow-x: hidden
+    }
+
+    #left-panel {
+        left: -220px
+    }
+}
+
+@media (max-width: 767px) {
+    .btn-responsive {
+        font-size: 95%;
+        padding: 4px 9px;
+    }
+
+    #left-panel {
+        left: -220px
+    }
+
+    .minified #left-panel {
+        left: 0
+    }
+}
+
+@media only screen and (min-width: 0) and (max-width: 679px) {
+    .btn-responsive span {
+        display: none;
+    }
+
+    .btn-responsive {
+        border-radius: 3px;
+        font-size: 95%;
+        padding: 4px 8px;
+    }
+
+    .profile-pic > img {
+        width: 90px
+    }
+
+    #main {
+        margin-left: 0;
+        overflow-x: hidden
+    }
+
+    #left-panel {
+        left: -220px
+    }
+
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        padding: 6px 8px;
+        font-size: 90%;
+    }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 479px) {
+    .btn-responsive span {
+        display: none;
+    }
+
+    .btn-responsive {
+        border-radius: 3px;
+        font-size: 90%;
+        padding: 4px 8px;
+    }
+
+    #main {
+        margin-left: 0;
+        overflow-x: hidden
+    }
+
+    #left-panel {
+        left: -220px
+    }
+
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        padding: 6px 8px;
+        font-size: 80%;
+    }
+
+    body.modal-open {
+        /* block scroll for mobile;
+           causes underlying page to jump to top;
+           prevents scrolling on all screens
+         */
+        overflow: hidden;
+        position: fixed;
+
+    }
+}
